@@ -37,3 +37,78 @@ input.error {
   height: 5px;
   margin-top: -12px;
 }
+
+.body {
+  background-color: silver;
+}
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 60vh;
+  justify-content: center;
+}
+
+.auth-wrapper form {
+  width: 375px;
+  margin: 0 auto;
+}
+
+.auth-wrapper h3 {
+  font-weight: 100;
+  color: white;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(79, 98, 148);
+}
+.auth-wrapper .form {
+  background: #0e101c;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.auth-wrapper .p {
+  color: #bf1650;
+}
+
+.auth-wrapper p::before {
+  display: inline;
+  content: "⚠ ";
+}
+
+.auth-wrapper input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.auth-wrapper label {
+  line-height: 2;
+  text-align: left;
+  display: block;
+ margin: 5px 0 ;
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.auth-wrapper button[type="submit"],
+.auth-wrapper input[type="submit"] {
+  background: #7A84EB;
+  color: white;
+  text-transform: uppercase;
+  border: none;
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 100;
+  letter-spacing: 10px;
+}
+
+.auth-wrapper button:hover {
+  background: #636ee6;
+  cursor: pointer;
+}
