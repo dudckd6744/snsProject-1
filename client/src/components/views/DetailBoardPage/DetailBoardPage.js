@@ -10,10 +10,11 @@ const { Meta } = Card;
 function DetailBoardPage(props) {
 
     const boardId = props.match.params.boardId
-    console.log(props.match.params.boardId)
+    // console.log(props.match.params.boardId)
     const variable = {boardId:boardId}
 
     const [Board, setBoard] = useState([])
+    const [comments, setcomments] = useState([])
 
     useEffect(() => {
 
@@ -26,9 +27,19 @@ function DetailBoardPage(props) {
                 alert("게시글 정보를 가져오는데 실패하였습니다.")
             }
         })
+
+        Axios.post('/api/comment/getComment',variable)
+        .then(response=>{
+            if(response.data.success){ 
+                console.log(response.data.comment)
+                setcomments(response.data.comment)
+            }else{
+                alert("Err")
+            }
+        })
         
     }, [])
-    console.log(Board[0]&& Board[0].image)
+    // console.log(Board[0]&& Board[0].image)
 
     var renderBoard = () =>{
         if(Board[0]&& Board[0].image && Board[0].image.length >0){
@@ -48,6 +59,7 @@ function DetailBoardPage(props) {
             return (
                 <Card 
                 style={{ 
+                    overflowX:'hidden',overflowy:'hidden',
                     maxwidth: "90%", margin:'2rem 2rem',border:"2px solid gray",
                     borderRadius:"10px",height:"700px",fontSize:"20px"
                 }}
@@ -68,7 +80,7 @@ function DetailBoardPage(props) {
                 {renderBoard()}
             </Col>
             <Col lg={12} xs={24}>
-                <Comments/>
+                <Comments content={comments} boardId={boardId}/>
             </Col>
         </Row>
     )

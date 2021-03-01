@@ -35,6 +35,7 @@ app.use(cookieParser());
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/sns', require('./routes/sns'));
+app.use('/api/comment', require('./routes/commet'));
 
 
 //use this to show the image you have in node js server to client (react js)
