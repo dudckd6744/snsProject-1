@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.26.14",
+    "@ant-design/icons": "^4.5.0",
+    "antd": "^4.13.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.6.0",
     "core-js": "^3.6.4",

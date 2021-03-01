@@ -8,6 +8,7 @@ import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
 import UploadPage from './views/UploadPage/UploadPage';
+import DetailBoardPage from './views/DetailBoardPage/DetailBoardPage';
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/upload" component={Auth(UploadPage, true)} />
+          <Route exact path="/board/:boardId" component={Auth(DetailBoardPage, true)} />
         </Switch>
       </div>
       <Footer />

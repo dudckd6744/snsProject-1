@@ -9,7 +9,7 @@ const boardSchema = mongoose.Schema({
     image: Array,
     title: String,
     description : String
-})
+},{timestamps: true})
 
 
 const Board = mongoose.model('Board', boardSchema);

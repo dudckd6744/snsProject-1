@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Icon } from 'antd';
+import { Card,Image  } from 'antd';
 import Axios from 'axios';
 const { Meta } = Card;
 
@@ -24,36 +24,29 @@ function LandingPage() {
     var renderBoard = Board
     .map((board, i)=>{
             if(board.image && board.image.length > 0){
-                return (
-                    <a href ={`${board._id}`} key={i}>
-                    <Card 
-                        style={{ maxWidth:"700px", margin: "2rem auto"}}
+                return (                            
+                    <Card key={i}
+                        style={{ maxWidth:"700px",width:'700px' ,margin: "2rem auto"}}
                         cover={
-                        <img
+                        <Image
                             style={{ height:"300px"}}
-                            alt="example"
+                            // alt="example"
                             src={`http://localhost:5000/${board.image}`}
                         />
                         }
-                        actions={[
-                        
-                        // <Icon type="setting"/>,
-                        // <Icon type="ellipsis"/>
-
-                        ]}
-                    >
+                        >   
+                        <a href ={`board/${board._id}`} >
                         <Meta
                         avatar={board.writer.name}
                         title={board.title}
                         description={board.description}
                         />
+                        </a>
                     </Card>
-                    </a>
                 )
             }else{
                 return(
-                    <a href ={`${board._id}`} key={i}>
-                    <Card 
+                    <Card key={i}
                         style={{ maxWidth:"700px", margin: "2rem auto"}}
                         
                         actions={[
@@ -63,22 +56,25 @@ function LandingPage() {
 
                         ]}
                     >
+                        <a href ={`board/${board._id}`} >
                         <Meta
                         avatar={board.writer.name}
                         title={board.title}
                         description={board.description}
                         />
+                        </a>
                     </Card>
-                    </a>
                 )
             }
             
     })
+    .sort((a,b)=>
+        b.key - a.key
+    )
 
     return (
     <>
     {renderBoard}
-            
         </>
     )
 }

@@ -47,6 +47,16 @@ router.get("/getboard", (req, res) => {
     })
 });
 
+router.post("/getBoardDetail", (req, res) => {
+    
+    Board.find({_id:req.body.boardId})
+    .populate('writer')
+    .exec((err, board)=>{
+        if(err) return res.status(400).json({success:false,err})
+        return res.status(200).send(board)
+    })
+});
+
 
 
 module.exports = router;

@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import {Input, Form, Typography, message,Button} from 'antd';
 // import FileUpload from './Sections/FileUpload';
 import Dropzone from "react-dropzone";
-import { Icon } from "antd";
+import { UploadOutlined} from '@ant-design/icons';
+
 import Axios from 'axios';
 // import Button from "react-bootstrap/Button"
 
@@ -111,7 +112,7 @@ function UploadPage(props) {
                 {({getRootProps, getInputProps})=> (
                     <Button size="large" {...getRootProps()}>
                         <input {...getInputProps()}/>
-                        <Icon type="upload" style={{fontSize:"1rem" }}/>
+                        <UploadOutlined style={{fontSize:"1rem" }}/>
                     </Button>
                 )}
                 </Dropzone>
