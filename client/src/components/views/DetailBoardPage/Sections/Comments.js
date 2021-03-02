@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Button,Comment} from "antd"
+import { Form, Input, Button,Comment, message} from "antd"
 import { useSelector } from 'react-redux'
 import Axios from 'axios'
 import SingleComment from './SingleComment'
@@ -24,23 +24,26 @@ function Comments(props) {
     }
 
     const handleSubmit =(event)=>{
-        
-        
         var body ={
             writer:user._id,
             boardId:boardId,
             content:Comments
         }
-        // console.log(user._id)
 
-        Axios.post("/api/comment/saveComment",body)
-        .then(response=>{
-            if(response.data.success){
-                setComments("")
-            }else{
-                alert("err")
-            }
-        })
+        if(Comments === ""){
+            message.warn("메세지를 입력해주세요")
+        }else{
+            Axios.post("/api/comment/saveComment",body)
+            .then(response=>{
+                if(response.data.success){
+                    setComments("")
+                    props.refreshFunction(response.data.doc)
+                }else{
+                    alert("err")
+                }
+            })
+        }
+        // console.log(user._id)
     }
 
     return (
@@ -49,7 +52,7 @@ function Comments(props) {
                 maxWidth:"90%", margin:"2rem 2rem",border:"2px solid black",    
                 borderRadius:"10px" ,height:"600px",overflowY:"scroll"
                 }}>
-                <SingleComment content={props.content} boardId={props.boardId}/>
+                <SingleComment refreshFunction={props.refreshFunction} content={props.content} boardId={props.boardId}/>
             </div>
             <Form onKeyDown={handleKeydown}
             onSubmit={handleSubmit}

@@ -41,6 +41,10 @@ function DetailBoardPage(props) {
     }, [])
     // console.log(Board[0]&& Board[0].image)
 
+    const refreshFunction = (newComment) =>{
+        setcomments(comments.concat(newComment))
+    }
+
     var renderBoard = () =>{
         if(Board[0]&& Board[0].image && Board[0].image.length >0){
             return(
@@ -80,7 +84,7 @@ function DetailBoardPage(props) {
                 {renderBoard()}
             </Col>
             <Col lg={12} xs={24}>
-                <Comments content={comments} boardId={boardId}/>
+                <Comments refreshFunction={refreshFunction} content={comments} boardId={boardId}/>
             </Col>
         </Row>
     )
