@@ -37,7 +37,8 @@ function Comments(props) {
             .then(response=>{
                 if(response.data.success){
                     setComments("")
-                    props.refreshFunction(response.data.doc)
+                    props.refreshFunction(response.data.result)
+                    console.log(response.data.result)
                 }else{
                     alert("err")
                 }
@@ -45,14 +46,25 @@ function Comments(props) {
         }
         // console.log(user._id)
     }
-
+    // console.log(props.content)
+    const renderSingComment=()=>(
+        props.content && props.content.map((comments ,i)=>(
+        <React.Fragment key={i}>
+            <SingleComment refreshFunction={props.refreshFunction} comments={comments} boardId={props.boardId}/>
+        </React.Fragment>
+        ))
+        .sort((a,b)=>
+        b.key - a.key
+    )
+        
+    )
     return (
         <div>
             <div style={{
                 maxWidth:"90%", margin:"2rem 2rem",border:"2px solid black",    
                 borderRadius:"10px" ,height:"600px",overflowY:"scroll"
                 }}>
-                <SingleComment refreshFunction={props.refreshFunction} content={props.content} boardId={props.boardId}/>
+                {renderSingComment()}
             </div>
             <Form onKeyDown={handleKeydown}
             onSubmit={handleSubmit}

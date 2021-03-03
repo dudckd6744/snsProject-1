@@ -42,7 +42,8 @@ function DetailBoardPage(props) {
     // console.log(Board[0]&& Board[0].image)
 
     const refreshFunction = (newComment) =>{
-        setcomments(comments.concat(newComment))
+        setcomments(comments.concat(...comments,newComment))
+        // setcomments(comments.splice(newComment)
     }
 
     var renderBoard = () =>{

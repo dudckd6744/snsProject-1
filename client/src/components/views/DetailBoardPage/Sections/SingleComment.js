@@ -8,56 +8,62 @@ import { useSelector } from 'react-redux';
 function SingleComment(props) {
     // const boardId = props.boardId
 
-    const user = useSelector(state => state.user.userData)
-    const comment = props.content
+    const user = useSelector(state => state.user)
+    const comment = props.comments
 
     const handelDelete =()=>{
         
         var body ={
-            writer:user._id,
-            _id:comment
+            // writer:user._id,
+            _id:props.comments._id
         }
-        console.log(props.content._id)
-        Axios.post('/api/comment/deleteComment',body)
-        .then(response=>{
-            if(response.data.success){
-                console.log(response.data)
-            }else{
-                message.warning("err")
-            }
-        })
-
+        console.log(props.comments._id)
+        if(user.userData._id === props.comments.writer._id){
+            Axios.post('/api/comment/deleteComment',body)
+            .then(response=>{
+                if(response.data.success){
+                    console.log(response.data)
+                    props.refreshFunction(response.data.comment)
+                }else{
+                    message.warning("err")
+                }
+            })
+        }else{
+            message.warning("본인의 댓글이아닙니다")
+        }
+        
     }
-    const actions=[
-        <span key="comment-reply-to">Reply to</span> ,<RestOutlined onClick={handelDelete}/>
-    ]
+    const renderdelete=()=>{
+        // console.log(props.comments.writer._id)
+            if(user.userData._id === props.comments.writer._id){
+            
+                return(
+                [<span key="comment-reply-to1">Reply to</span>,<RestOutlined onClick={handelDelete}/>]
+                )
+            }else{
+                return(
+                [<span key="comment-reply-to2">Reply to</span>]
+                )
+            }
+        
+        
+    }
 
-    const renderComment= 
-        comment && comment.map((comments , i)=>(
-            <Comment key={i}
+    
+    return (
+        <div>
+            <Comment
                 style={{margin:"0 1rem"}}
-                actions={actions}
-                author={comments.writer.name}
-                avatar={<Avatar arc={comments.writer.image} alt="image"/>}
+                actions={renderdelete()}
+                author={props.comments&&props.comments.writer.name}
+                avatar={<Avatar arc={props.comments&&props.comments.writer.image} alt="image"/>}
                 content={
                 <p>
-                    {comments.content}
+                    {props.comments&&props.comments.content}
                 </p>
                 }
                 >   
             </Comment>
-    ))
-    .sort((a,b)=>
-        b.key - a.key
-    )
-
-    
-    
-    
-
-    return (
-        <div>
-            {renderComment}
         </div>
     )
 }

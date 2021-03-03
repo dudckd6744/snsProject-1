@@ -13,7 +13,14 @@ router.post("/saveComment", (req, res) => {
     console.log(req.body)
     comment.save((err, doc)=>{
         if(err) return res.status(400).json({success:false, err})
-        return res.status(200).json({success:true,doc})
+
+        Comment.find({_id:doc._id})
+        .populate('writer')
+        .exec((err, result)=> {
+            if(err )return res.json({ success:false, err})
+            res.status(200).json({success:true, result})
+        // return res.status(200).json({success:true,doc})
+        })
     })
 });
 
@@ -30,7 +37,7 @@ router.post("/getComment", (req, res) => {
 
 router.post("/deleteComment", (req, res) => {
     console.log(req.body)
-    Comment.findOneAndDelete({"writer":req.body.writer},{"_id":req.body._id})
+    Comment.findByIdAndDelete({"_id":req.body._id})
     .exec((err,comment)=>{
         if(err) return res.status(400).json({success:false, err})
         return res.status(200).json({success:true,comment})   
