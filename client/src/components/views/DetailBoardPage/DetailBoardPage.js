@@ -42,8 +42,18 @@ function DetailBoardPage(props) {
     // console.log(Board[0]&& Board[0].image)
 
     const refreshFunction = (newComment) =>{
-        setcomments(comments.concat(...comments,newComment))
+        setcomments(comments.concat(newComment))
         // setcomments(comments.splice(newComment)
+    }
+    const refreshDelete = (newComment)=>{
+        const index = comments.findIndex(comments => comments._id === newComment._id);
+        console.log(index)
+            if(index !== -1){
+                var  deletecomments = comments.filter(comments => comments._id !==newComment._id)
+                console.log(deletecomments)
+                setcomments(deletecomments)
+            }
+        // setcomments(comments.filter(...comments,newComment))
     }
 
     var renderBoard = () =>{
@@ -85,7 +95,7 @@ function DetailBoardPage(props) {
                 {renderBoard()}
             </Col>
             <Col lg={12} xs={24}>
-                <Comments refreshFunction={refreshFunction} content={comments} boardId={boardId}/>
+                <Comments refreshDelete={refreshDelete} refreshFunction={refreshFunction} content={comments} boardId={boardId}/>
             </Col>
         </Row>
     )

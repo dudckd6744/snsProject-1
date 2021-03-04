@@ -1,15 +1,21 @@
-import React, { useEffect } from 'react'
-import { Comment, Avatar, message } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { Comment, Avatar, message,Form, Input, Button } from 'antd';
 import Axios from 'axios';
 import {RestOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
+import ReplyComment from './ReplyComment';
 
 
 function SingleComment(props) {
     // const boardId = props.boardId
 
     const user = useSelector(state => state.user)
-    const comment = props.comments
+    const [OpenReply, setOpenReply] = useState(false)
+    const [Replycomment, setReplycomment] = useState("")
+
+    const handleOpenReply=()=>{
+        setOpenReply(!OpenReply)
+    }
 
     const handelDelete =()=>{
         
@@ -23,7 +29,7 @@ function SingleComment(props) {
             .then(response=>{
                 if(response.data.success){
                     console.log(response.data)
-                    props.refreshFunction(response.data.comment)
+                    props.refreshDelete(response.data.comment)
                 }else{
                     message.warning("err")
                 }
@@ -38,18 +44,50 @@ function SingleComment(props) {
             if(user.userData._id === props.comments.writer._id){
             
                 return(
-                [<span key="comment-reply-to1">Reply to</span>,<RestOutlined onClick={handelDelete}/>]
-                )
+                [<span key="comment-reply-to1" onClick={handleOpenReply}>Reply to</span>,
+                <RestOutlined onClick={handelDelete}/>,
+                <ReplyComment comments={props.commentList} responseCommentId={props.comments._id}/>
+            ])
             }else{
                 return(
-                [<span key="comment-reply-to2">Reply to</span>]
-                )
+                [<span key="comment-reply-to2" onClick={handleOpenReply}>Reply to</span>,
+                <ReplyComment comments={props.commentList} responseCommentId={props.comments._id}/>
+            ])
             }
-        
-        
-    }
+        }
 
-    
+        const handleKeydown =(event)=>{
+            // console.log(event.keyCode)
+            if(event.keyCode ===13){
+                handleSubmit();
+            }
+        }
+
+        const handleComment =(e)=>{
+            setReplycomment(e.currentTarget.value)
+        }
+
+        const handleSubmit=()=>{
+            
+            let body ={
+                writer: user.userData._id,
+                boardId:  props.boardId,
+                responseTo: props.comments._id,
+                content: Replycomment
+            }
+
+            Axios.post("/api/comment/saveComment",body)
+            .then(response=>{
+                if(response.data.success){
+                    // setComments("")
+                    // props.refreshFunction(response.data.result)
+                    setOpenReply(false)
+                    console.log(response.data.result)
+                }else{
+                    alert("err")
+                }
+            })
+        }
     return (
         <div>
             <Comment
@@ -64,6 +102,29 @@ function SingleComment(props) {
                 }
                 >   
             </Comment>
+            {OpenReply && 
+            <Form onKeyDown={handleKeydown}
+            onSubmit={handleSubmit}
+            style={{
+                maxWidth:"90%",marginLeft:"60px", marginTop:"-17px"
+            }}>
+                <Input 
+                value={Replycomment}
+                onChange={handleComment}
+                style={{width:"90%",height:"30px"}} 
+                size="large"
+                placeholder="코멘트를 작성해주세요..."
+                />
+                <Button 
+                
+                style={{width:"10%",height:"30px"}} 
+                size="small"
+                type="primary"
+                onClick={handleSubmit}
+                > 
+                확인</Button>
+            </Form>
+            }
         </div>
     )
 }

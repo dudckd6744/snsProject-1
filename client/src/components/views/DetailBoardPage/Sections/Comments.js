@@ -3,6 +3,7 @@ import { Form, Input, Button,Comment, message} from "antd"
 import { useSelector } from 'react-redux'
 import Axios from 'axios'
 import SingleComment from './SingleComment'
+import ReplyComment from './ReplyComment'
 
 function Comments(props) {
 
@@ -16,7 +17,7 @@ function Comments(props) {
 
     }
     const handleKeydown =(event)=>{
-        console.log(event.keyCode)
+        // console.log(event.keyCode)
         if(event.keyCode ===13){
             handleSubmit();
         }
@@ -49,10 +50,14 @@ function Comments(props) {
     // console.log(props.content)
     const renderSingComment=()=>(
         props.content && props.content.map((comments ,i)=>(
-        <React.Fragment key={i}>
-            <SingleComment refreshFunction={props.refreshFunction} comments={comments} boardId={props.boardId}/>
-        </React.Fragment>
-        ))
+            (!comments.responseTo &&
+                <React.Fragment key={i}>
+            <SingleComment refreshDelete={props.refreshDelete} refreshFunction={props.refreshFunction} 
+            commentList={props.content} comments={comments} boardId={props.boardId}/>
+            <ReplyComment style={{display: "none"}}comments={props.content} responseCommentId={comments._id}/>
+                </React.Fragment>
+            ))
+        )
         .sort((a,b)=>
         b.key - a.key
     )
