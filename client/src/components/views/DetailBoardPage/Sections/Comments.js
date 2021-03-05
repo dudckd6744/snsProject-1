@@ -53,8 +53,11 @@ function Comments(props) {
             (!comments.responseTo &&
                 <React.Fragment key={i}>
             <SingleComment refreshDelete={props.refreshDelete} refreshFunction={props.refreshFunction} 
-            commentList={props.content} comments={comments} boardId={props.boardId}/>
-            <ReplyComment style={{display: "none"}}comments={props.content} responseCommentId={comments._id}/>
+            commentList={props.content} commentsMap={comments} boardId={props.boardId}/>
+            <div style={{position:"absolute"}}>
+            <ReplyComment  comments={props.content} commentsMap={comments}
+            responseCommentId={comments._id} boardId={props.boardId}/>
+            </div>
                 </React.Fragment>
             ))
         )

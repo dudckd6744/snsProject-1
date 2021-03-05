@@ -21,10 +21,9 @@ function SingleComment(props) {
         
         var body ={
             // writer:user._id,
-            _id:props.comments._id
+            _id:props.commentsMap._id
         }
-        console.log(props.comments._id)
-        if(user.userData._id === props.comments.writer._id){
+        if(user.userData._id === props.commentsMap.writer._id){
             Axios.post('/api/comment/deleteComment',body)
             .then(response=>{
                 if(response.data.success){
@@ -41,17 +40,17 @@ function SingleComment(props) {
     }
     const renderdelete=()=>{
         // console.log(props.comments.writer._id)
-            if(user.userData._id === props.comments.writer._id){
+            if(user.userData._id === props.commentsMap.writer._id){
             
                 return(
-                [<span key="comment-reply-to1" onClick={handleOpenReply}>Reply to</span>,
-                <RestOutlined onClick={handelDelete}/>,
-                <ReplyComment comments={props.commentList} responseCommentId={props.comments._id}/>
+                [<span key="comment-reply-to1"   onClick={handleOpenReply}>Reply to</span>,
+                <RestOutlined  onClick={handelDelete}/>,
+                // <ReplyComment commentsMap={props.commentsMap} comments={props.commentList} responseCommentId={props.commentsMap._id}boardId={props.boardId}/>
             ])
             }else{
                 return(
                 [<span key="comment-reply-to2" onClick={handleOpenReply}>Reply to</span>,
-                <ReplyComment comments={props.commentList} responseCommentId={props.comments._id}/>
+                // <ReplyComment commentsMap={props.commentsMap} comments={props.commentList} responseCommentId={props.commentsMap._id}boardId={props.boardId}/>
             ])
             }
         }
@@ -72,7 +71,7 @@ function SingleComment(props) {
             let body ={
                 writer: user.userData._id,
                 boardId:  props.boardId,
-                responseTo: props.comments._id,
+                responseTo: props.commentsMap._id,
                 content: Replycomment
             }
 
@@ -93,11 +92,11 @@ function SingleComment(props) {
             <Comment
                 style={{margin:"0 1rem"}}
                 actions={renderdelete()}
-                author={props.comments&&props.comments.writer.name}
-                avatar={<Avatar arc={props.comments&&props.comments.writer.image} alt="image"/>}
+                author={props.commentsMap&&props.commentsMap.writer.name}
+                avatar={<Avatar arc={props.commentsMap&&props.commentsMap.writer.image} alt="image"/>}
                 content={
                 <p>
-                    {props.comments&&props.comments.content}
+                    {props.commentsMap&&props.commentsMap.content}
                 </p>
                 }
                 >   
