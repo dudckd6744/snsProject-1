@@ -1,6 +1,7 @@
 @import '~antd/dist/antd.css';
 
 .menu {
+  height: 60px;
   padding: 0 20px;
   border-bottom: solid 1px #e8e8e8;
   overflow: auto;
@@ -37,10 +38,12 @@
 }
 
 .menu__container .menu_left {
+  margin-top: 12px;
   float: left;
 }
 
 .menu__container .menu_rigth {
+  margin-top: 12px;
   float: right;
 }
 

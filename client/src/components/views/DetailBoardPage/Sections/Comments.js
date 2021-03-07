@@ -47,17 +47,20 @@ function Comments(props) {
         }
         // console.log(user._id)
     }
-    // console.log(props.content)
     const renderSingComment=()=>(
         props.content && props.content.map((comments ,i)=>(
             (!comments.responseTo &&
                 <React.Fragment key={i}>
-            <SingleComment refreshDelete={props.refreshDelete} refreshFunction={props.refreshFunction} 
-            commentList={props.content} commentsMap={comments} boardId={props.boardId}/>
-            <div style={{position:"absolute"}}>
-            <ReplyComment  comments={props.content} commentsMap={comments}
-            responseCommentId={comments._id} boardId={props.boardId}/>
+        <div style={{position:"relative", display:''}}>
+            <div style={{  zIndex:"1",display:"flex", }}>
+                <SingleComment refreshDelete={props.refreshDelete} refreshFunction={props.refreshFunction} 
+                commentList={props.content} commentsMap={comments} boardId={props.boardId}/>
             </div>
+            <div style={{position:"", zIndex:"2" }}>
+                <ReplyComment refreshDelete={props.refreshDelete} comments={props.content} commentsMap={comments}
+                responseCommentId={comments._id} boardId={props.boardId} />
+            </div>
+        </div>
                 </React.Fragment>
             ))
         )

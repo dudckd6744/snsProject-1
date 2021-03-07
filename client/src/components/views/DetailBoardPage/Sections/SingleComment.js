@@ -78,8 +78,8 @@ function SingleComment(props) {
             Axios.post("/api/comment/saveComment",body)
             .then(response=>{
                 if(response.data.success){
-                    // setComments("")
-                    // props.refreshFunction(response.data.result)
+                    setReplycomment("")
+                    props.refreshFunction(response.data.result)
                     setOpenReply(false)
                     console.log(response.data.result)
                 }else{
@@ -105,18 +105,17 @@ function SingleComment(props) {
             <Form onKeyDown={handleKeydown}
             onSubmit={handleSubmit}
             style={{
-                maxWidth:"90%",marginLeft:"60px", marginTop:"-17px"
+                marginLeft:"50px", marginTop:"-17px"
             }}>
                 <Input 
                 value={Replycomment}
                 onChange={handleComment}
-                style={{width:"90%",height:"30px"}} 
+                style={{width:"400px",height:"30px"}} 
                 size="large"
                 placeholder="코멘트를 작성해주세요..."
                 />
                 <Button 
-                
-                style={{width:"10%",height:"30px"}} 
+                style={{display:"none"}} 
                 size="small"
                 type="primary"
                 onClick={handleSubmit}

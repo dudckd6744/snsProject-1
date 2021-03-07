@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Comment, Avatar } from 'antd';
+import { Comment, Avatar, message } from 'antd';
 import { useSelector } from 'react-redux';
 import {RestOutlined } from '@ant-design/icons';
+import Axios from "axios";
 
 function ReplyComment(props) {
 
@@ -9,6 +10,7 @@ function ReplyComment(props) {
     // const boardId = props.boardId
     const user = useSelector(state => state.user)
     const [OpenReplyComment, setOpenReplyComment] = useState(false)
+    const [Reply, setReply] = useState([])
 
 
     useEffect(() => {
@@ -20,28 +22,44 @@ function ReplyComment(props) {
             return null;
         })
         setcommentNum(commentNumber)
-    }, [])
-    console.log(props.commentsMap &&props.commentsMap.writer._id)
-    const renderdelete=()=>{
-        // console.log(props.comments.writer._id)
-            if(user.userData._id === props.commentsMap.writer._id){   
-            
-                return(
-                [
-                <RestOutlined onClick/>
-            ])
-            }else{
-                return(
-                [
-            ])
-            }
+    }, [props])
+
+    const handelDelete =(commente)=>{
+        var body ={
+            _id:commente._id
         }
+        console.log(commente.writer._id)
+        if(user.userData._id === commente.writer._id){
+            Axios.post('/api/comment/deleteComment',body)
+            .then(response=>{
+                if(response.data.success){
+                    console.log(response.data)
+                    props.refreshDelete(response.data.comment)
+                }else{
+                    message.warning("err")
+                }
+            })
+        }else{
+            message.warning("본인의 댓글이아닙니다")
+        }
+        
+    }
+
+    const renderdelete=(comment)=>{
+        // console.log(props.comments.writer._id)
+            if( user.userData._id === comment.writer._id)
+            return  [<RestOutlined key={comment._id} onClick={()=>{handelDelete(comment)}}/>]
+    }
+            
+
     const handleReplycomment=(responseCommentId)=>
         props.comments.map((comment,i)=>(
                 <React.Fragment key={i}  >
                 {comment.responseTo === responseCommentId &&
+                <div style={{ width:"80%", marginLeft:"50px"}}>
                     <Comment
-                        actions={renderdelete()}
+                        // style={{float:"left"}}
+                        actions={renderdelete(comment)}
                         author={comment.writer.name}
                         avatar={<Avatar arc={comment.writer.image} alt="image"/>}
                         content={
@@ -51,19 +69,21 @@ function ReplyComment(props) {
                         }
                         >   
                     </Comment>
+                </div>
                 }
                 </React.Fragment>
-        ))
+        ) 
+        )
         
     const onClickChange =()=>{
         setOpenReplyComment(!OpenReplyComment)
     }
 
     return (
-        <div style={{maxWidth:"100%",marginTop:"-35px" ,marginLeft:' 8rem', zIndex:"1"}}>
+        <div style={{ position:"relative" }}>
             {commentNum > 0&& 
-                <p style={{fontSize:"12px", color:"gray"}} onClick={onClickChange}>
-                -View {commentNum}  more comment(s)
+                <p style={{fontSize:"12px", color:"gray" }} onClick={onClickChange}>
+                - View {commentNum}  more comment(s)
                 </p>
             }
             <div >

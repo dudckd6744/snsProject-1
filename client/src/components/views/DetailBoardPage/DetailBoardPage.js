@@ -3,6 +3,7 @@ import { Row, Col,Card } from "antd"
 import { Image } from 'antd';
 import Comments from './Sections/Comments';
 import Axios from 'axios';
+import { RestTwoTone } from '@ant-design/icons';
 
 const { Meta } = Card;
 
@@ -15,13 +16,14 @@ function DetailBoardPage(props) {
 
     const [Board, setBoard] = useState([])
     const [comments, setcomments] = useState([])
+    const [Reply, setReply] = useState([])
 
     useEffect(() => {
 
         Axios.post("/api/sns/getBoardDetail", variable)
         .then(response => {
             if(response.data){
-                console.log(response.data)
+                // console.log(response.data)
                 setBoard(response.data)
             }else{
                 alert("게시글 정보를 가져오는데 실패하였습니다.")
@@ -31,19 +33,18 @@ function DetailBoardPage(props) {
         Axios.post('/api/comment/getComment',variable)
         .then(response=>{
             if(response.data.success){ 
-                console.log(response.data.comment)
+                // console.log(response.data.comment)
                 setcomments(response.data.comment)
             }else{
                 alert("Err")
             }
         })
-        
     }, [])
-    // console.log(Board[0]&& Board[0].image)
+
 
     const refreshFunction = (newComment) =>{
         setcomments(comments.concat(newComment))
-        // setcomments(comments.splice(newComment)
+        
     }
     const refreshDelete = (newComment)=>{
         const index = comments.findIndex(comments => comments._id === newComment._id);
@@ -74,7 +75,6 @@ function DetailBoardPage(props) {
             return (
                 <Card 
                 style={{ 
-                    overflowX:'hidden',overflowy:'hidden',
                     maxwidth: "90%", margin:'2rem 2rem',border:"2px solid gray",
                     borderRadius:"10px",height:"700px",fontSize:"20px"
                 }}

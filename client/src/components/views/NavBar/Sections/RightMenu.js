@@ -6,6 +6,8 @@ import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import {TiUploadOutline} from "react-icons/ti"
+import { FaUser } from "react-icons/fa"
+
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
@@ -33,7 +35,13 @@ function RightMenu(props) {
     )
   } else {
     return (
-      <Menu mode={props.mode}>
+      <Menu  mode={props.mode}>
+        <Menu.Item key="user_board">
+          <a href={`/${user.userData && user.userData._id}/user_board`}>
+            <FaUser  
+            style={{ fontSize:'28px', marginBottom:'-12px', }}/>
+          </a>
+        </Menu.Item>
         <Menu.Item key="upload">
           <a href="/upload">
             <TiUploadOutline 
