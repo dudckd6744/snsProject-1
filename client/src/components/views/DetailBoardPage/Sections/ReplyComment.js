@@ -14,6 +14,7 @@ function ReplyComment(props) {
 
 
     useEffect(() => {
+        //대댓글 수를 구해준다
         var commentNumber= 0;
 
         props.comments.map((comment)=>{
@@ -61,7 +62,7 @@ function ReplyComment(props) {
                         // style={{float:"left"}}
                         actions={renderdelete(comment)}
                         author={comment.writer.name}
-                        avatar={<Avatar arc={comment.writer.image} alt="image"/>}
+                        avatar={comment&&comment.writer&&comment.writer.image}
                         content={
                         <p>
                             {comment.content}

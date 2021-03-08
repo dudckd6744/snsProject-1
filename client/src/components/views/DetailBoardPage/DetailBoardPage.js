@@ -41,15 +41,19 @@ function DetailBoardPage(props) {
         })
     }, [])
 
-
+    // 댓글 추가시 렌더링 해주는 부분
     const refreshFunction = (newComment) =>{
         setcomments(comments.concat(newComment))
         
     }
+    //댓글삭제 버튼입력시 랜더링 해주는부분
     const refreshDelete = (newComment)=>{
+        // 파인드인덱스로 삭제한 코멘트가 지금 스테잇코멘트에있는지 확인후
         const index = comments.findIndex(comments => comments._id === newComment._id);
         console.log(index)
             if(index !== -1){
+                // -1이아니면 일치하는게 있다는말
+                //일치하는 코멘트를 제외한 나머지를 렌더링해준다
                 var  deletecomments = comments.filter(comments => comments._id !==newComment._id)
                 console.log(deletecomments)
                 setcomments(deletecomments)

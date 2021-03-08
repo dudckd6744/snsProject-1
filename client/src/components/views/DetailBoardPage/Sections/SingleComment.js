@@ -56,6 +56,7 @@ function SingleComment(props) {
         }
 
         const handleKeydown =(event)=>{
+            // 엔터키 누를시 코멘트 입력 시켜주기
             // console.log(event.keyCode)
             if(event.keyCode ===13){
                 handleSubmit();
@@ -93,7 +94,7 @@ function SingleComment(props) {
                 style={{margin:"0 1rem"}}
                 actions={renderdelete()}
                 author={props.commentsMap&&props.commentsMap.writer.name}
-                avatar={<Avatar arc={props.commentsMap&&props.commentsMap.writer.image} alt="image"/>}
+                avatar={props.commentsMap&&props.commentsMap.writer&&props.commentsMap.writer.image}
                 content={
                 <p>
                     {props.commentsMap&&props.commentsMap.content}
