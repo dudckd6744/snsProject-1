@@ -31,7 +31,7 @@ function LandingPage() {
                         <Image
                             style={{ height:"300px"}}
                             // alt="example"
-                            src={`http://localhost:5000/${board.image}`}
+                            src={`http://54.180.114.62:5000/${board.image}`}
                         />
                         }
                         >   

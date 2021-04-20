@@ -100,7 +100,7 @@ function UploadPage(props) {
                         
                             <img onClick={()=>onDelet(image)} 
                             key={i} style={{  width:"240px", height:"160px", position:"absolute", top:"350px" }} 
-                            src={`http://localhost:5000/${image}`}/>
+                            src={`http://54.180.114.62:5000/${image}`}/>
                     ))}
 
                 

@@ -70,7 +70,7 @@ function DetailBoardPage(props) {
                     cover={<Image 
                         style={{height:"600px"}}
                         alt="example" 
-                        src={`http://localhost:5000/${Board[0]&& Board[0].image}`}/>}
+                        src={`http://54.180.114.62:5000/${Board[0]&& Board[0].image}`}/>}
                 >
                     <Meta title={Board[0]&& Board[0].title} description={Board[0]&& Board[0].description} />
                 </Card>
